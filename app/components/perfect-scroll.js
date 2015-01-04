@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     renderPerfectScroll: function() {
         var self = this;
 
-        this.$(eId).perfectScrollbar({
+        this.$('#' + this.get('eId')).perfectScrollbar({
             wheelSpeed: self.get('wheelSpeed'),
             wheelPropagation: self.get('wheelPropagation'),
             swipePropagation: self.get('swipePropagation'),
