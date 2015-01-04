@@ -37,7 +37,7 @@ export default Ember.Component.extend({
 
     eId: function() {
         if (Ember.isEmpty(this.get('scrollId'))) {
-            this.set('scrollId', 'perfect-scroll-' + this.getScrollId(););
+            this.set('scrollId', 'perfect-scroll-' + this.getScrollId());
         }
 
         return this.get('scrollId');
