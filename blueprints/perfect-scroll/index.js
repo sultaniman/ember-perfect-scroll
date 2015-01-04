@@ -1,5 +1,5 @@
 module.exports = {
-  description: 'Component wrapper for perfect-scrollbar'
+  description: 'Component wrapper for perfect-scrollbar',
 
   // locals: function(options) {
   //   // Return custom template variables here.
