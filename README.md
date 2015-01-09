@@ -14,9 +14,7 @@ This is just a wrapper as an Ember component around [perfect-scrollbar](https://
 You can pass its options as they are defined for `perfect-scrollbar` plugin
 ```hbs
 {{#perfect-scroll wheelSpeed=2}}
-<div class="scrollable">
     CONTENTS
-</div>
 {{/perfect-scroll}}
 ```
 
