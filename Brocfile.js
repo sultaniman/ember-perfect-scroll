@@ -5,8 +5,8 @@ var EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 var app = new EmberAddon();
 
-app.import('bower_components/perfect-scrollbar/perfect-scrollbar.js');
-app.import('bower_components/perfect-scrollbar/perfect-scrollbar.css');
+app.import('bower_components/perfect-scrollbar/js/perfect-scrollbar.js');
+app.import('bower_components/perfect-scrollbar/js/perfect-scrollbar.css');
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
