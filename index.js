@@ -7,7 +7,7 @@ module.exports = {
   included: function(app) {
     this._super.included(app);
  
-    app.import('bower_components/perfect-scrollbar/perfect-scrollbar.js');
-    app.import('bower_components/perfect-scrollbar/perfect-scrollbar.css');
+    app.import('bower_components/perfect-scrollbar/js/perfect-scrollbar.js');
+    app.import('bower_components/perfect-scrollbar/css/perfect-scrollbar.css');
   }
 };
