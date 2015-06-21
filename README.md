@@ -13,10 +13,21 @@ This is just a wrapper as an Ember component around [perfect-scrollbar](https://
 ## Using
 You can pass its options as they are defined for `perfect-scrollbar` plugin
 ```hbs
-<perfect-scroll wheelSpeed=2>
+{{perfect-scroll wheelSpeed=2}}
     CONTENTS
-</perfect-scroll>
+{{/perfect-scroll}}
 ```
+
+## Important on CSS classes
+CSS classes a provided by [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar) 
+1. `ps-container` 
+2. `ps-active-x` 
+3. `ps-active-y`
+
+Addon provides only `ps-content` class alongside with default classes.
+
+As an example you can use dummy app for tests under `tests/dummy`
+
 
 ## Optional parameters
 
