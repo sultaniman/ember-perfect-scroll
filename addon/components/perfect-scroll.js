@@ -49,16 +49,9 @@ export default Ember.Component.extend({
       if (isEmpty(get(this, 'scrollId'))) {
           set(this, 'scrollId', `perfect-scroll-${guidFor(this)}`);
       }
-
-      return get(this, 'scrollId');
-    },
-    
-    set() {
-      warn('`scrollId` is read only');
-
       return get(this, 'scrollId');
     }
-  }),
+  }).readOnly(),
 
   _getOptions() {
     return {
