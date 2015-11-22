@@ -19,15 +19,20 @@ You can pass its options as they are defined for `perfect-scrollbar` plugin
 ```
 
 ## Important on CSS classes
-CSS classes a provided by [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar) 
-1. `ps-container` 
-2. `ps-active-x` 
+CSS classes a provided by [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar)
+1. `ps-container`
+2. `ps-active-x`
 3. `ps-active-y`
 
 Addon provides only `ps-content` class alongside with default classes.
 
 As an example you can use dummy app for tests under `tests/dummy`
 
+## Issues
+
+If you will face issues related to `perfect-scrollbar` using `ember g perfect-scroll` then manually install it.
+
+`bower install perfect-scrollbar`
 
 ## Optional parameters
 
