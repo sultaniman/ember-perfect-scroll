@@ -13,7 +13,7 @@ This is just a wrapper as an Ember component around [perfect-scrollbar](https://
 ## Using
 You can pass its options as they are defined for `perfect-scrollbar` plugin
 ```hbs
-{{perfect-scroll wheelSpeed=2}}
+{{#perfect-scroll wheelSpeed=2}}
     CONTENTS
 {{/perfect-scroll}}
 ```
