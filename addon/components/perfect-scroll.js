@@ -10,8 +10,7 @@ const {
   run,
   computed,
   isEmpty,
-  guidFor,
-  warn
+  guidFor
 } = Ember;
 
 
