@@ -43,11 +43,17 @@ export default Ember.Component.extend({
     });
   }),
 
+  _destroyPerfectScroll: on('willDestroyElement', function() {
+    let el = document.getElementById(get(this, 'eId'));
+    window.Ps.destroy(el);
+  }),
+
   eId: computed('scrollId', {
     get() {
       if (isEmpty(get(this, 'scrollId'))) {
           set(this, 'scrollId', `perfect-scroll-${guidFor(this)}`);
       }
+
       return get(this, 'scrollId');
     }
   }).readOnly(),
