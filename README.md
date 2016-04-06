@@ -9,7 +9,7 @@ This is just a wrapper as an Ember component around [perfect-scrollbar](https://
 
 ## Installation
 
-* `npm install --save-dev ember-perfectscroll`
+* `ember install ember-perfectscroll`
 * `ember g perfect-scroll`
 
 ## Using
