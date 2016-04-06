@@ -1,6 +1,6 @@
 # Ember-perfectscroll
 
-[![Build Status: Linux](https://travis-ci.org/imanhodjaev/ember-perfect-scroll.svg?branch=master)]
+![Build Status: Linux](https://travis-ci.org/imanhodjaev/ember-perfect-scroll.svg?branch=master)
 
 This README outlines the details of collaborating on this Ember addon.
 
