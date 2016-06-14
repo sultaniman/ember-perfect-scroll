@@ -30,9 +30,6 @@ Addon provides only `ps-content` class alongside with default classes.
 
 As an example you can use dummy app for tests under `tests/dummy`
 
-## Issues
-
-If you will face issues related to `perfect-scrollbar` using `ember g perfect-scroll` then manually install it.
 
 `bower install perfect-scrollbar`
 
