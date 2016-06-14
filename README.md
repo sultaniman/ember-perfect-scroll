@@ -36,6 +36,47 @@ If you will face issues related to `perfect-scrollbar` using `ember g perfect-sc
 
 `bower install perfect-scrollbar`
 
+## Scroll events
+
+perfect-scrollbar dispatches its own custom events.
+
+### ps-scroll-y
+This event fires when the y-axis is scrolled in either direction.
+
+### ps-scroll-x
+This event fires when the x-axis is scrolled in either direction.
+
+### ps-scroll-up
+This event fires when scrolling upwards.
+
+### ps-scroll-down
+This event fires when scrolling downwards.
+
+### ps-scroll-left
+This event fires when scrolling to the left.
+
+### ps-scroll-right
+This event fires when scrolling to the right.
+
+### ps-y-reach-start
+This event fires when scrolling reaches the start of the y-axis.
+
+### ps-y-reach-end
+This event fires when scrolling reaches the end of the y-axis (useful for infinite scroll).
+
+### ps-x-reach-start
+This event fires when scrolling reaches the start of the x-axis.
+
+### ps-x-reach-end
+This event fires when scrolling reaches the end of the x-axis.
+
+To use then just pass the event name and bound your action
+```hbs
+{{#perfect-scroll ps-y-reach-end=(action 'yReachEnd')}}
+    CONTENTS
+{{/perfect-scroll}}
+```
+
 ## Optional parameters
 
 #### wheelSpeed
