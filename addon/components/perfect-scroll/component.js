@@ -79,15 +79,14 @@ export default Ember.Component.extend({
   bindEvents() {
     let self = this;
     let mapping = {};
+    let el = $(document.getElementById(prop('eId')));
     
     psEvents.map(evt => {
-      let el = $(document.getElementById(prop('eId')));
-
       mapping[evt] = function() {
         self.callEvent(evt);
       };
 
-      $(el).on(evt, mapping[evt].bind(self));
+      $(el).on(evt, mapping[evt].bind(this));
     });
 
     set(this, 'mapping', mapping);
@@ -100,11 +99,11 @@ export default Ember.Component.extend({
   },
 
   unbindEvents() {
-    let eventMappings = prop('mapping');
+    let mapping = prop('mapping');
+    let el = $(document.getElementById(prop('eId')));
 
     psEvents.map(evt => {
-      let el = $(document.getElementById(prop('eId')));
-      $(el).off(evt, run.cancel(this, eventMappings[evt]));
+      $(el).off(evt, run.cancel(this, mapping[evt].bind(this)));
     });
   },
 
