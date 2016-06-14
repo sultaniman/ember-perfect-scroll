@@ -1,6 +1,6 @@
 {
   "name": "ember-perfect-scroll",
-  "version": "0.1.3 ",
+  "version": "0.1.3",
   "description": "Ember-cli perfect scrollbar wrapper",
   "directories": {
     "doc": "doc",
