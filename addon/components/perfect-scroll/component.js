@@ -4,7 +4,6 @@ import layout from './template';
 
 const {
   $,
-  on,
   get,
   set,
   run,
@@ -54,18 +53,18 @@ export default Ember.Component.extend({
   scrollYMarginOffset: 0,
   includePadding: false,
 
-  onInsert: on('didInsertElement', function() {
+  didInsertElement() {
     this._super(...arguments);
     prop = prop.bind(this);
     window.Ps.initialize($(`#${prop('eId')}`)[0], this._getOptions());
     this.bindEvents();
-  }),
+  },
 
-  onDestroy: on('willDestroyElement', function() {
+  willDestroyElement() {
     this._super(...arguments);
     window.Ps.destroy(document.getElementById(prop('eId')));
     this.unbindEvents();
-  }),
+  },
 
   eId: computed('scrollId', {
     get() {
