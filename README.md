@@ -70,7 +70,7 @@ This event fires when scrolling reaches the start of the x-axis.
 ### ps-x-reach-end
 This event fires when scrolling reaches the end of the x-axis.
 
-To use then just pass the event name and bound your action
+To use them just pass the event name and bound your action
 ```hbs
 {{#perfect-scroll ps-y-reach-end=(action 'yReachEnd')}}
     CONTENTS
