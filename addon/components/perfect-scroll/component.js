@@ -58,8 +58,12 @@ export default Ember.Component.extend({
     prop = prop.bind(this);
 
     run.schedule('afterRender', () => {
-      window.Ps.initialize($(`#${prop('eId')}`)[0], this._getOptions());
-      this.bindEvents();
+      try {
+        window.Ps.initialize($(`#${prop('eId')}`)[0], this._getOptions());
+        this.bindEvents();
+      } catch (e) {
+        console.log(prop('eId'), e);
+      }
     });
   },
 
