@@ -52,21 +52,15 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    console.log('didInsertElement', get(this, 'eId'));
 
     run.schedule('afterRender', () => {
-      try {
-        window.Ps.initialize($(`#${get(this, 'eId')}`)[0], this._getOptions());
-        this.bindEvents();
-      } catch (e) {
-        console.log(get(this, 'eId'), e);
-      }
+      window.Ps.initialize($(`#${get(this, 'eId')}`)[0], this._getOptions());
+      this.bindEvents();
     });
   },
 
   willDestroyElement() {
     this._super(...arguments);
-
     window.Ps.destroy(document.getElementById(get(this, 'eId')));
     this.unbindEvents();
   },
@@ -81,11 +75,15 @@ export default Ember.Component.extend({
     }
   }).readOnly(),
 
+  /**
+   * Binds perfect-scrollbar events to function
+   * and then calls related events if user gives the action
+   */
   bindEvents() {
     let self = this;
     let mapping = {};
     let el = $(document.getElementById(get(this, 'eId')));
-    
+
     psEvents.map(evt => {
       mapping[evt] = function() {
         self.callEvent(evt);
@@ -97,12 +95,19 @@ export default Ember.Component.extend({
     set(this, 'mapping', mapping);
   },
 
+  /**
+   * Calls perfect-scrollbar
+   * @param  {String} evt perfect-scrollbar event name
+   */
   callEvent(evt) {
     if (isPresent(get(this, evt))) {
       this.sendAction(evt);
     }
   },
 
+  /**
+   * Unbinds all event listeners
+   */
   unbindEvents() {
     let mapping = get(this, 'mapping');
     let el = $(document.getElementById(get(this, 'eId')));
