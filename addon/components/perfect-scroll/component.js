@@ -70,6 +70,7 @@ export default Ember.Component.extend({
 
   willDestroyElement() {
     this._super(...arguments);
+    prop = prop.bind(Function.prototype);
 
     window.Ps.destroy(document.getElementById(prop('eId')));
     this.unbindEvents();
