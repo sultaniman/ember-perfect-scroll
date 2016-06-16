@@ -56,17 +56,18 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super(...arguments);
     prop = prop.bind(this);
-    window.Ps.initialize($(`#${prop('eId')}`)[0], this._getOptions());
-    this.bindEvents();
+
+    run.schedule('afterRender', () => {
+      window.Ps.initialize($(`#${prop('eId')}`)[0], this._getOptions());
+      this.bindEvents();
+    });
   },
 
   willDestroyElement() {
     this._super(...arguments);
 
-    run.schedule('afterRender', () => {
-      window.Ps.destroy(document.getElementById(prop('eId')));
-      this.unbindEvents();
-    });
+    window.Ps.destroy(document.getElementById(prop('eId')));
+    this.unbindEvents();
   },
 
   eId: computed('scrollId', {
