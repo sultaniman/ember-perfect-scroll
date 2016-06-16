@@ -56,6 +56,7 @@ export default Ember.Component.extend({
   didInsertElement() {
     this._super(...arguments);
     prop = prop.bind(this);
+    console.log('didInsertElement', prop('eId'));
 
     run.schedule('afterRender', () => {
       try {
