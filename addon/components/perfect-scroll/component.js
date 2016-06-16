@@ -63,7 +63,7 @@ export default Ember.Component.extend({
   willDestroyElement() {
     this._super(...arguments);
 
-    run.schedule('afterRender', function() {
+    run.schedule('afterRender', () => {
       window.Ps.destroy(document.getElementById(prop('eId')));
       this.unbindEvents();
     });
