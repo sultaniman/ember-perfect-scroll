@@ -27,9 +27,6 @@ const psEvents = [
   'ps-x-reach-end'
 ];
 
-let prop = function(key) {
-	return get(this, key);
-};
 
 export default Ember.Component.extend({
   layout: layout,
@@ -55,24 +52,22 @@ export default Ember.Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
-    prop = prop.bind(this);
-    console.log('didInsertElement', prop('eId'));
+    console.log('didInsertElement', get(this, 'eId'));
 
     run.schedule('afterRender', () => {
       try {
-        window.Ps.initialize($(`#${prop('eId')}`)[0], this._getOptions());
+        window.Ps.initialize($(`#${get(this, 'eId')}`)[0], this._getOptions());
         this.bindEvents();
       } catch (e) {
-        console.log(prop('eId'), e);
+        console.log(get(this, 'eId'), e);
       }
     });
   },
 
   willDestroyElement() {
     this._super(...arguments);
-    prop = prop.bind(Function.prototype);
 
-    window.Ps.destroy(document.getElementById(prop('eId')));
+    window.Ps.destroy(document.getElementById(get(this, 'eId')));
     this.unbindEvents();
   },
 
@@ -89,7 +84,7 @@ export default Ember.Component.extend({
   bindEvents() {
     let self = this;
     let mapping = {};
-    let el = $(document.getElementById(prop('eId')));
+    let el = $(document.getElementById(get(this, 'eId')));
     
     psEvents.map(evt => {
       mapping[evt] = function() {
@@ -103,14 +98,14 @@ export default Ember.Component.extend({
   },
 
   callEvent(evt) {
-    if (isPresent(prop(evt))) {
+    if (isPresent(get(this, evt))) {
       this.sendAction(evt);
     }
   },
 
   unbindEvents() {
-    let mapping = prop('mapping');
-    let el = $(document.getElementById(prop('eId')));
+    let mapping = get(this, 'mapping');
+    let el = $(document.getElementById(get(this, 'eId')));
 
     psEvents.map(evt => {
       $(el).off(evt, run.cancel(this, mapping[evt].bind(this)));
@@ -119,20 +114,20 @@ export default Ember.Component.extend({
 
   _getOptions() {
     return {
-      wheelSpeed            : prop('wheelSpeed'),
-      wheelPropagation      : prop('wheelPropagation'),
-      swipePropagation      : prop('swipePropagation'),
-      minScrollbarLength    : prop('minScrollbarLength'),
-      maxScrollbarLength    : prop('maxScrollbarLength'),
-      useBothWheelAxes      : prop('useBothWheelAxes'),
-      useKeyboard           : prop('useKeyboard'),
-      suppressScrollX       : prop('suppressScrollX'),
-      suppressScrollY       : prop('suppressScrollY'),
-      scrollXMarginOffset   : prop('scrollXMarginOffset'),
-      scrollYMarginOffset   : prop('scrollYMarginOffset'),
-      includePadding        : prop('includePadding'),
-      scrollTop             : prop('scrollTop'),
-      scrollLeft            : prop('scrollLeft')
+      wheelSpeed            : get(this, 'wheelSpeed'),
+      wheelPropagation      : get(this, 'wheelPropagation'),
+      swipePropagation      : get(this, 'swipePropagation'),
+      minScrollbarLength    : get(this, 'minScrollbarLength'),
+      maxScrollbarLength    : get(this, 'maxScrollbarLength'),
+      useBothWheelAxes      : get(this, 'useBothWheelAxes'),
+      useKeyboard           : get(this, 'useKeyboard'),
+      suppressScrollX       : get(this, 'suppressScrollX'),
+      suppressScrollY       : get(this, 'suppressScrollY'),
+      scrollXMarginOffset   : get(this, 'scrollXMarginOffset'),
+      scrollYMarginOffset   : get(this, 'scrollYMarginOffset'),
+      includePadding        : get(this, 'includePadding'),
+      scrollTop             : get(this, 'scrollTop'),
+      scrollLeft            : get(this, 'scrollLeft')
     };
   }
 });
