@@ -62,8 +62,11 @@ export default Ember.Component.extend({
 
   willDestroyElement() {
     this._super(...arguments);
-    window.Ps.destroy(document.getElementById(prop('eId')));
-    this.unbindEvents();
+
+    run.schedule('afterRender', function() {
+      window.Ps.destroy(document.getElementById(prop('eId')));
+      this.unbindEvents();
+    });
   },
 
   eId: computed('scrollId', {
