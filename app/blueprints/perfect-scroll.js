@@ -1,1 +1,0 @@
-export { default } from 'ember-perfect-scroll/blueprints/perfect-scroll';
