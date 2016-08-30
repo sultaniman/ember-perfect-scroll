@@ -10,7 +10,7 @@ This is just a wrapper as an Ember component around [perfect-scrollbar](https://
 ## Installation
 
 * `ember install ember-perfectscroll`
-* `ember g perfect-scroll`
+* `ember g ember-perfect-scroll`
 
 ## Using
 You can pass its options as they are defined for `perfect-scrollbar` plugin
