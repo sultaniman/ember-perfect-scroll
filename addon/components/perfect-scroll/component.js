@@ -61,7 +61,13 @@ export default Ember.Component.extend({
 
   willDestroyElement() {
     this._super(...arguments);
-    window.Ps.destroy(document.getElementById(get(this, 'eId')));
+    
+    let element = document.getElementById(get(this, 'eId'));
+
+    if (element) {
+      window.Ps.destroy(element);
+    }
+    
     this.unbindEvents();
   },
 
