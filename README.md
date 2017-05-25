@@ -2,13 +2,10 @@
 
 ![Build Status: Linux](https://travis-ci.org/imanhodjaev/ember-perfect-scroll.svg?branch=master)
 
-This README outlines the details of collaborating on this Ember addon.
-
 ## Intro
 This is just a wrapper as an Ember component around [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
 
 ## Installation
-
 * `ember install ember-perfectscroll`
 * `ember g ember-perfect-scroll`
 
@@ -22,6 +19,7 @@ You can pass its options as they are defined for `perfect-scrollbar` plugin
 
 ## Important on CSS classes
 CSS classes a provided by [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar)
+
 1. `ps-container`
 2. `ps-active-x`
 3. `ps-active-y`
@@ -30,11 +28,9 @@ Addon provides only `ps-content` class alongside with default classes.
 
 As an example you can use dummy app for tests under `tests/dummy`
 
-
 `bower install perfect-scrollbar`
 
 ## Scroll events
-
 perfect-scrollbar dispatches its own custom events.
 
 ### ps-scroll-y
