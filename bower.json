@@ -1,9 +1,20 @@
 {
   "name": "ember-perfect-scroll",
+  "description": "Ember-cli perfect scrollbar wrapper",
+  "main": "index.js",
+  "authors": [
+    "Sultan Iman"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "ember-addon",
+    "perfect-scrollbar",
+    "ember-cli-scrollbars",
+    "ui",
+    "widget"
+  ],
+  "homepage": "https://www.npmjs.com/package/ember-perfectscroll",
   "dependencies": {
-    "ember": "~2.7.0",
-    "ember-cli-shims": "0.1.1",
-    "ember-qunit-notifications": "0.1.0",
-    "perfect-scrollbar": "^0.6.12"
+    "perfect-scrollbar": "^0.7.0"
   }
 }
