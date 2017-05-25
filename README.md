@@ -137,4 +137,5 @@ Ps.initialize(container, {
 });
 ```
 
+Get more information about [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
