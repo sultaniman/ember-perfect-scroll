@@ -49,6 +49,7 @@ export default Ember.Component.extend({
   scrollXMarginOffset: 0,
   scrollYMarginOffset: 0,
   includePadding: false,
+  theme: 'default',
 
   didInsertElement() {
     this._super(...arguments);
@@ -138,7 +139,8 @@ export default Ember.Component.extend({
       scrollYMarginOffset   : get(this, 'scrollYMarginOffset'),
       includePadding        : get(this, 'includePadding'),
       scrollTop             : get(this, 'scrollTop'),
-      scrollLeft            : get(this, 'scrollLeft')
+      scrollLeft            : get(this, 'scrollLeft'),
+      theme                 : get(this, 'theme'),
     };
   }
 });

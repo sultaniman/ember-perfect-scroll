@@ -124,4 +124,17 @@ The number of pixels the content height can surpass the container height without
 When set to true, it uses `innerWidth` and `innerHeight` for the container size instead of `width` and `height`. When your container element has non-zero padding and the scrollbar layout looks weird, this option can be helpful.
 **Default: false**
 
+### theme
+A string. It's a class name added to the container element. The class name is prepended with `ps-theme-`. So default theme class name is `ps-theme-default`. In order to create custom themes with scss use `ps-container($theme)` mixin, where `$theme` is a scss map.
+**Default**: `'default'`
+
+**Example 1:**
+
+Add `theme` parameter:
+```javascript
+Ps.initialize(container, {
+  theme: 'my-theme-name'
+});
+```
+
 For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
