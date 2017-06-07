@@ -99,6 +99,11 @@ export default Ember.Component.extend({
     });
   },
 
+  didRender() {
+    let el = document.getElementById(get(this, 'eId'));
+    window.Ps.update(el);
+  },
+
   willDestroyElement() {
     this._super(...arguments);
 
