@@ -27,6 +27,18 @@ const psEvents = [
   'ps-x-reach-end'
 ];
 
+var _scrollPositionComputer = {
+  get(key) {
+    return get(this, `_${key}`) || 0;
+  },
+  set(key, value) {
+    set(this, `_${key}`, value);
+    run.schedule('afterRender', () => {
+      get(this, '_scrollElement')[key] = value;
+      window.Ps.update(get(this, '_scrollElement'));
+    });
+  }
+};
 
 export default Ember.Component.extend({
   layout: layout,
@@ -50,33 +62,12 @@ export default Ember.Component.extend({
   theme: 'default',
 
   _scrollTop: 0,
-  scrollTop: computed('_scrollTop', {
-    get() {
-      return get(this, '_scrollTop') || 0;
-    },
-    set(key, value) {
-      set(this, `_${key}`, value);
-      run.schedule('afterRender', () => {
-        get(this, '_scrollElement')[key] = value;
-        window.Ps.update(get(this, '_scrollElement'));
-      });
-    }
-  }),
   _scrollLeft: 0,
-  scrollLeft: computed('_scrollLeft', {
-    get() {
-      return get(this, '_scrollLeft') || 0;
-    },
-    set(key, value) {
-      set(this, `_${key}`, value);
-      run.schedule('afterRender', () => {
-        get(this, '_scrollElement')[key] = value;
-        window.Ps.update(get(this, '_scrollElement'));
-      });
-    }
-  }),
 
-  scrolled(evt){
+  scrollTop:  computed('_scrollTop',  _scrollPositionComputer),
+  scrollLeft: computed('_scrollLeft', _scrollPositionComputer),
+
+  scrolled(evt) {
     this.setProperties({
       "_scrollTop": evt.target.scrollTop,
       "_scrollLeft": evt.target.scrollLeft
