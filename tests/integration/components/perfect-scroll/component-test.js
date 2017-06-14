@@ -67,3 +67,33 @@ test('it renders with scroll positions, and properties update when scroll is cha
   assert.equal(this.get("scrollTopPosition"), 50);
   assert.equal(this.get("scrollLeftPosition"), 75);
 });
+
+test('it renders with scroll positions, ps-scroll-x and ps-scroll-y events fire', function(assert) {
+  assert.expect(4);
+
+  this.set("scrollTopPosition", 100);
+  this.set("scrollLeftPosition", 125);
+
+  this.set("scrollLeftHandler", function() {
+    assert.ok(true);
+  });
+  this.set("scrollTopHandler", function() {
+    assert.ok(true);
+  });
+
+  this.render(hbs `
+    {{#perfect-scroll
+      scrollTop=scrollTopPosition
+      scrollLeft=scrollLeftPosition
+      ps-scroll-x=(action scrollLeftHandler)
+      ps-scroll-y=(action scrollTopHandler)
+    }}
+      <div style="height:1000px; width:1000px;"></div>
+    {{/perfect-scroll}}
+  `);
+
+  this.set("scrollTopPosition", 0);
+  this.set("scrollLeftPosition", 0);
+  this.set("scrollTopPosition", 100);
+  this.set("scrollLeftPosition", 125);
+});
