@@ -1,0 +1,95 @@
+{
+  "name": "imanhodjaev/ember-perfect-scroll",
+  "version": "0.1.4",
+  "libraries": {
+    "xv": "^1.1.25"
+  },
+  "title": "perferct-scroll",
+  "branch": "master",
+  "style": {
+    "name": "Brutalist",
+    "componentSet": {
+      "nav": "nav/BasicNav",
+      "header": "header/BasicHeader",
+      "article": "article/MarkdownArticle",
+      "footer": "footer/BasicFooter"
+    },
+    "fontFamily": "Consolas, \"Liberation Mono\", Menlo, Courier, monospace",
+    "heading": {},
+    "typeScale": [
+      48,
+      32,
+      20,
+      18,
+      16,
+      14,
+      12
+    ],
+    "layout": {
+      "maxWidth": 1024,
+      "fluid": true
+    },
+    "colors": {
+      "text": "#333",
+      "background": "#fff",
+      "primary": "#666",
+      "secondary": "#888",
+      "highlight": "#1f80ff",
+      "muted": "#f6f6f6",
+      "border": "#eee"
+    }
+  },
+  "content": [
+    {
+      "component": "nav",
+      "links": [
+        {
+          "href": "https://github.com/imanhodjaev/ember-perfect-scroll",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://npmjs.com/package/ember-perfectscroll",
+          "text": "npm"
+        }
+      ]
+    },
+    {
+      "component": "header",
+      "heading": "ember-perfect-scroll",
+      "subhead": "Perfect scroll component as an Ember cli addon",
+      "children": [
+        {
+          "component": "ui/TweetButton",
+          "text": "ember-perfect-scroll: Perfect scroll component as an Ember cli addon",
+          "url": null
+        },
+        {
+          "component": "ui/GithubButton",
+          "user": "imanhodjaev",
+          "repo": "ember-perfect-scroll"
+        }
+      ],
+      "text": "v0.1.15"
+    },
+    {
+      "component": "article",
+      "metadata": {
+        "source": "github.readme"
+      },
+      "html": "\n<p><img src=\"https://travis-ci.org/imanhodjaev/ember-perfect-scroll.svg?branch=master\"></p>\n<h2>Intro</h2>\n<p>This is just a wrapper as an Ember component around <a href=\"https://github.com/noraesae/perfect-scrollbar\">perfect-scrollbar</a>.</p>\n<h2>Installation</h2>\n<ul>\n<li><code>ember install ember-perfectscroll</code></li>\n<li><code>ember g ember-perfect-scroll</code></li>\n</ul>\n<h2>Using</h2>\n<p>You can pass its options as they are defined for <code>perfect-scrollbar</code> plugin</p>\n<pre><span class=\"xml\"></span><span class=\"hljs-template-tag\">{{#<span class=\"hljs-name\">perfect-scroll</span>}}</span><span class=\"xml\">\n    CONTENTS\n</span><span class=\"hljs-template-tag\">{{/<span class=\"hljs-name\">perfect-scroll</span>}}</span><span class=\"xml\"></span></pre><h2>Important on CSS classes</h2>\n<p>CSS classes a provided by <a href=\"https://github.com/noraesae/perfect-scrollbar\">perfect-scrollbar</a></p>\n<ol>\n<li><code>ps-container</code></li>\n<li><code>ps-active-x</code></li>\n<li><code>ps-active-y</code></li>\n</ol>\n<p>Addon provides only <code>ps-content</code> class alongside with default classes.</p>\n<p>As an example you can use dummy app for tests under <code>tests/dummy</code></p>\n<p><code>bower install perfect-scrollbar</code></p>\n<h2>Scroll events</h2>\n<p>perfect-scrollbar dispatches its own custom events.</p>\n<h3>ps-scroll-y</h3>\n<p>This event fires when the y-axis is scrolled in either direction.</p>\n<h3>ps-scroll-x</h3>\n<p>This event fires when the x-axis is scrolled in either direction.</p>\n<h3>ps-scroll-up</h3>\n<p>This event fires when scrolling upwards.</p>\n<h3>ps-scroll-down</h3>\n<p>This event fires when scrolling downwards.</p>\n<h3>ps-scroll-left</h3>\n<p>This event fires when scrolling to the left.</p>\n<h3>ps-scroll-right</h3>\n<p>This event fires when scrolling to the right.</p>\n<h3>ps-y-reach-start</h3>\n<p>This event fires when scrolling reaches the start of the y-axis.</p>\n<h3>ps-y-reach-end</h3>\n<p>This event fires when scrolling reaches the end of the y-axis (useful for infinite scroll).</p>\n<h3>ps-x-reach-start</h3>\n<p>This event fires when scrolling reaches the start of the x-axis.</p>\n<h3>ps-x-reach-end</h3>\n<p>This event fires when scrolling reaches the end of the x-axis.</p>\n<p>To use them just pass the event name and bound your action</p>\n<pre><span class=\"xml\"></span><span class=\"hljs-template-tag\">{{#<span class=\"hljs-name\">perfect-scroll</span> ps-y-reach-end=(action &apos;yReachEnd&apos;)}}</span><span class=\"xml\">\n    CONTENTS\n</span><span class=\"hljs-template-tag\">{{/<span class=\"hljs-name\">perfect-scroll</span>}}</span><span class=\"xml\"></span></pre><h2>Optional parameters</h2>\n<h4>wheelSpeed</h4>\n<p>The scroll speed applied to mousewheel event.\n<strong>Default: 1</strong></p>\n<h4>wheelPropagation</h4>\n<p>If this option is true, when the scroll reaches the end of the side, mousewheel event will be propagated to parent element.\n<strong>Default: false</strong></p>\n<h4>swipePropagation</h4>\n<p>If this option is true, when the scroll reaches the end of the side, touch scrolling will be propagated to parent element.\n<strong>Default: true</strong></p>\n<h4>minScrollbarLength</h4>\n<p>When set to an integer value, the thumb part of the scrollbar will not shrink below that number of pixels.\n<strong>Default: null</strong></p>\n<h4>maxScrollbarLength</h4>\n<p>When set to an integer value, the thumb part of the scrollbar will not expand over that number of pixels.\n<strong>Default: null</strong></p>\n<h4>useBothWheelAxes</h4>\n<p>When set to true, and only one (vertical or horizontal) scrollbar is visible then both vertical and horizontal scrolling will affect the scrollbar.\n<strong>Default: false</strong></p>\n<h4>useKeyboard</h4>\n<p>When set to true, the scroll works with arrow keys on the keyboard. The element is scrolled only when the mouse cursor hovers the element.\n<strong>Default: true</strong></p>\n<h4>suppressScrollX</h4>\n<p>When set to true, the scroll bar in X axis will not be available, regardless of the content width.\n<strong>Default: false</strong></p>\n<h4>suppressScrollY</h4>\n<p>When set to true, the scroll bar in Y axis will not be available, regardless of the content height.\n<strong>Default: false</strong></p>\n<h4>scrollXMarginOffset</h4>\n<p>The number of pixels the content width can surpass the container width without enabling the X axis scroll bar. Allows some &quot;wiggle room&quot; or &quot;offset break&quot;, so that X axis scroll bar is not enabled just because of a few pixels.\n<strong>Default: 0</strong></p>\n<h4>scrollYMarginOffset</h4>\n<p>The number of pixels the content height can surpass the container height without enabling the Y axis scroll bar. Allows some &quot;wiggle room&quot; or &quot;offset break&quot;, so that Y axis scroll bar is not enabled just because of a few pixels.\n<strong>Default: 0</strong></p>\n<h4>includePadding</h4>\n<p>When set to true, it uses <code>innerWidth</code> and <code>innerHeight</code> for the container size instead of <code>width</code> and <code>height</code>. When your container element has non-zero padding and the scrollbar layout looks weird, this option can be helpful.\n<strong>Default: false</strong></p>\n<h3>theme</h3>\n<p>A string. It&apos;s a class name added to the container element. The class name is prepended with <code>ps-theme-</code>. So default theme class name is <code>ps-theme-default</code>. In order to create custom themes with scss use <code>ps-container($theme)</code> mixin, where <code>$theme</code> is a scss map.\n<strong>Default</strong>: <code>&apos;default&apos;</code></p>\n<p><strong>Example 1:</strong></p>\n<p>Add <code>theme</code> parameter:</p>\n<pre>Ps.initialize(container, {\n  <span class=\"hljs-attr\">theme</span>: <span class=\"hljs-string\">&apos;my-theme-name&apos;</span>\n});</pre><p>Get more information about <a href=\"https://github.com/noraesae/perfect-scrollbar\">perfect-scrollbar</a>.\nFor more information on using ember-cli, visit <a href=\"http://www.ember-cli.com/\">http://www.ember-cli.com/</a>.</p>\n"
+    },
+    {
+      "component": "footer",
+      "links": [
+        {
+          "href": "https://github.com/imanhodjaev/ember-perfect-scroll",
+          "text": "GitHub"
+        },
+        {
+          "href": "https://github.com/imanhodjaev",
+          "text": "imanhodjaev"
+        }
+      ]
+    }
+  ]
+}
