@@ -8,6 +8,6 @@ module.exports = {
   },
 
   afterInstall: function(options) {
-    return this.addBowerPackageToProject('perfect-scrollbar');
+    return this.addPackageToProject('perfect-scrollbar');
   }
 };
