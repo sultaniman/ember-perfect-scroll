@@ -1,8 +1,14 @@
 /* eslint-env node */
 'use strict';
 
+const path = require('path');
+
 module.exports = {
   name: 'ember-perfect-scroll',
+
+  blueprintsPath: function() {
+    return path.join(__dirname, 'blueprints');
+  },
 
   included: function(app) {
     this._super.included(app);
