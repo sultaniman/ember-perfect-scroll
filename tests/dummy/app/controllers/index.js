@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  scrollTop: 50,
+  scrollLeft: 50,
   actions: {
     yReachEnd() {
       /* eslint-disable no-console */

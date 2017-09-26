@@ -27,6 +27,18 @@ const psEvents = [
   'ps-x-reach-end'
 ];
 
+var _scrollPositionComputer = {
+  get(key) {
+    return get(this, `_${key}`) || 0;
+  },
+  set(key, value) {
+    set(this, `_${key}`, value);
+    run.schedule('afterRender', () => {
+      get(this, '_scrollElement')[key] = value;
+      window.Ps.update(get(this, '_scrollElement'));
+    });
+  }
+};
 
 export default Ember.Component.extend({
   layout: layout,
@@ -44,20 +56,43 @@ export default Ember.Component.extend({
   useKeyboard: true,
   suppressScrollX: false,
   suppressScrollY: false,
-  scrollTop: 0,
-  scrollLeft: 0,
   scrollXMarginOffset: 0,
   scrollYMarginOffset: 0,
   includePadding: false,
   theme: 'default',
+
+  _scrollTop: 0,
+  _scrollLeft: 0,
+
+  scrollTop:  computed('_scrollTop',  _scrollPositionComputer),
+  scrollLeft: computed('_scrollLeft', _scrollPositionComputer),
+
+  scrolled(evt) {
+    this.setProperties({
+      "_scrollTop": evt.target.scrollTop,
+      "_scrollLeft": evt.target.scrollLeft
+    });
+  },
 
   didInsertElement() {
     this._super(...arguments);
 
     run.schedule('afterRender', () => {
       window.Ps.initialize($(`#${get(this, 'eId')}`)[0], this._getOptions());
+
+      // TODO: This should possibly be put somewhere else.
+      // Ideally, this handler would wrap any ps-scroll-y or -x handlers and call them after it's done.
+      $(get(this, "_scrollElement")).on('ps-scroll-y ps-scroll-x', (e) => {
+        get(this, "scrolled").call(this, e);
+      });
+
       this.bindEvents();
     });
+  },
+
+  didRender() {
+    let el = document.getElementById(get(this, 'eId'));
+    window.Ps.update(el);
   },
 
   willDestroyElement() {
@@ -82,6 +117,10 @@ export default Ember.Component.extend({
     }
   }).readOnly(),
 
+  _scrollElement: Ember.computed('eId', function() {
+    return document.getElementById(get(this, 'eId'));
+  }),
+
   /**
    * Binds perfect-scrollbar events to function
    * and then calls related events if user gives the action
@@ -89,7 +128,7 @@ export default Ember.Component.extend({
   bindEvents() {
     let self = this;
     let mapping = {};
-    let el = $(document.getElementById(get(this, 'eId')));
+    let el = document.getElementById(get(this, 'eId'));
 
     psEvents.map(evt => {
       mapping[evt] = function() {
@@ -117,7 +156,7 @@ export default Ember.Component.extend({
    */
   unbindEvents() {
     let mapping = get(this, 'mapping');
-    let el = $(document.getElementById(get(this, 'eId')));
+    let el = document.getElementById(get(this, 'eId'));
 
     psEvents.map(evt => {
       $(el).off(evt, run.cancel(this, mapping[evt].bind(this)));
@@ -138,8 +177,6 @@ export default Ember.Component.extend({
       scrollXMarginOffset   : get(this, 'scrollXMarginOffset'),
       scrollYMarginOffset   : get(this, 'scrollYMarginOffset'),
       includePadding        : get(this, 'includePadding'),
-      scrollTop             : get(this, 'scrollTop'),
-      scrollLeft            : get(this, 'scrollLeft'),
       theme                 : get(this, 'theme'),
     };
   }
