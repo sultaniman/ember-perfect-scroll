@@ -29,6 +29,7 @@ const psEvents = [
 
 
 export default Ember.Component.extend({
+
   layout: layout,
 
   // Internal id for element
@@ -55,21 +56,32 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     run.schedule('afterRender', () => {
-      window.Ps.initialize($(`#${get(this, 'eId')}`)[0], this._getOptions());
+      window.Ps.initialize(this.getElementForPs(), this._getOptions());
       this.bindEvents();
+      this.triggerLifeCycleAction(true);
     });
   },
 
   willDestroyElement() {
     this._super(...arguments);
 
-    let element = document.getElementById(get(this, 'eId'));
+    let element = this.getElementForPs();
 
     if (element) {
       window.Ps.destroy(element);
     }
 
     this.unbindEvents();
+    this.triggerLifeCycleAction(false);
+  },
+
+  triggerLifeCycleAction(isInitialized) {
+    let perfectScrollInitialized = this.get('perfectScrollInitialized') || function(){};
+    perfectScrollInitialized(this.get('eId'), isInitialized);
+  },
+
+  getElementForPs() {
+    return document.getElementById(get(this, 'eId'));
   },
 
   eId: computed('scrollId', {

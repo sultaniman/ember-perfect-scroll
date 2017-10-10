@@ -1,5 +1,17 @@
-{{#perfect-scroll scrollTop=50 ps-y-reach-end=(action 'yReachEnd') ps-scroll-x='scrollX' ps-scroll-y='scrollY'}}
-<div class="content">
-
-</div>
+{{#perfect-scroll scrollId='boo' perfectScrollInitialized=(action 'perfectScrollInitialized') scrollTop=50 ps-y-reach-end=(action 'yReachEnd') ps-scroll-x='scrollX' ps-scroll-y='scrollY' as |ps|}}
+  <div class="content">
+  </div>
 {{/perfect-scroll}}
+
+<button onclick={{action 'maximizeHeight'}}>Maximize height</button>
+<br>
+<button onclick={{action 'performScroll'}}>Perform Scroll</button>
+
+{{#perfect-scroll scrollId='foo' perfectScrollInitialized=(action 'perfectScrollInitialized') scrollTop=50 ps-y-reach-end=(action 'yReachEnd') ps-scroll-x='scrollX' ps-scroll-y='scrollY' as |ps|}}
+  <div class="content">
+  </div>
+{{/perfect-scroll}}
+
+<button onclick={{action 'maximizeHeight2'}}>Maximize height</button>
+<br>
+<button onclick={{action 'performScroll2'}}>Perform Scroll</button>
