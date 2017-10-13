@@ -27,6 +27,19 @@ const psEvents = [
   'ps-x-reach-end'
 ];
 
+// Perfect Scrollbar scroll events, scroll value type mapping
+const psEventsScrollValueTypeMapping = {
+  'ps-scroll-y' : 'scrollTop',
+  'ps-scroll-x': 'scrollLeft',
+  'ps-scroll-up': 'scrollTop',
+  'ps-scroll-down': 'scrollTop',
+  'ps-scroll-left': 'scrollLeft',
+  'ps-scroll-right': 'scrollLeft',
+  'ps-y-reach-start': 'scrollTop',
+  'ps-y-reach-end': 'scrollTop',
+  'ps-x-reach-start': 'scrollLeft',
+  'ps-x-reach-end': 'scrollLeft',
+};
 
 export default Ember.Component.extend({
 
@@ -58,7 +71,7 @@ export default Ember.Component.extend({
     run.schedule('afterRender', () => {
       window.Ps.initialize(this.getElementForPs(), this._getOptions());
       this.bindEvents();
-      this.triggerLifeCycleAction(true);
+      this.triggerLifeCycleAction('initialized');
     });
   },
 
@@ -72,12 +85,12 @@ export default Ember.Component.extend({
     }
 
     this.unbindEvents();
-    this.triggerLifeCycleAction(false);
+    this.triggerLifeCycleAction('willBeDestroyed');
   },
 
-  triggerLifeCycleAction(isInitialized) {
-    let perfectScrollInitialized = this.get('perfectScrollInitialized') || function(){};
-    perfectScrollInitialized(this.get('eId'), isInitialized);
+  triggerLifeCycleAction(eventName) {
+    let lifeCycleEventOccurred = this.get('lifeCycleEventOccurred') || function(){};
+    lifeCycleEventOccurred(this.get('eId'), eventName);
   },
 
   getElementForPs() {
@@ -101,11 +114,11 @@ export default Ember.Component.extend({
   bindEvents() {
     let self = this;
     let mapping = {};
-    let el = $(document.getElementById(get(this, 'eId')));
+    let el = this.getElementForPs();
 
     psEvents.map(evt => {
       mapping[evt] = function() {
-        self.callEvent(evt);
+        self.callEvent(evt, get(el, psEventsScrollValueTypeMapping[evt]));
       };
 
       $(el).on(evt, mapping[evt].bind(this));
@@ -117,10 +130,11 @@ export default Ember.Component.extend({
   /**
    * Calls perfect-scrollbar
    * @param  {String} evt perfect-scrollbar event name
+   * @param {Number} value
    */
-  callEvent(evt) {
+  callEvent(evt, value) {
     if (isPresent(get(this, evt))) {
-      this.sendAction(evt);
+      this.sendAction(evt, value);
     }
   },
 

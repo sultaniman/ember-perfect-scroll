@@ -4,6 +4,10 @@ const {isEmpty, isPresent} = Ember;
 export default Ember.Mixin.create({
   init() {
     this._super(...arguments);
+    this.initializePerfecScrollArray();
+  },
+
+  initializePerfecScrollArray() {
     this.set('perfectScrollIds', Ember.A());
   },
 
@@ -44,8 +48,8 @@ export default Ember.Mixin.create({
   },
 
   actions: {
-    perfectScrollInitialized(perfectScrollId, isInitialized) {
-      isInitialized ? this.get('perfectScrollIds').pushObject(perfectScrollId) :  this.get('perfectScrollIds').removeObject(perfectScrollId);
+    lifeCycleEventOccurred(perfectScrollId, eventName) {
+      eventName === 'initialized' ? this.get('perfectScrollIds').pushObject(perfectScrollId) :  this.get('perfectScrollIds').removeObject(perfectScrollId);
     },
   }
 });

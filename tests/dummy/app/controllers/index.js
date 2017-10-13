@@ -6,38 +6,28 @@ export default Ember.Controller.extend(PerfectScrollController,{
 
   },
   actions: {
-    yReachEnd() {
+    yReachEnd(scrollPosition) {
       /* eslint-disable no-console */
-      console.log('ps-y-reach-end');
+      console.log(`ps-y-reach-end - ${scrollPosition}`);
     },
 
-    scrollX() {
+    scrollX(scrollPosition) {
       /* eslint-disable no-console */
-      console.log('ps-scroll-x');
+      console.log(`ps-scroll-x - ${scrollPosition}`);
     },
 
-    scrollY(val) {
+    scrollY(scrollPosition) {
       /* eslint-disable no-console */
-      console.log('ps-scroll-y');
-      console.log(val);
+      console.log(`ps-scroll-y - ${scrollPosition}`);
     },
 
-    maximizeHeight() {
-      Ember.$('.content').height(720);
+    changeContainerHeight() {
+      Ember.$('.ps-content').height(500);
       this.updatePerfectScroll();
     },
 
     performScroll() {
-      this.performScroll(undefined, 35);
-    },
-
-    maximizeHeight2() {
-      Ember.$('.content').height(720);
-      this.updatePerfectScroll();
-    },
-
-    performScroll2() {
-      this.performScroll(78, 1500, 'foo');
+      this.performScroll(150, 150);
     },
   }
 });
