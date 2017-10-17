@@ -31,7 +31,13 @@ As an example you can use dummy app for tests under `tests/dummy`
 `bower install perfect-scrollbar`
 
 ## Scroll events
-perfect-scrollbar dispatches its own custom events.
+perfect-scrollbar dispatches its own custom events. For each event type; the current value of the scroll position for 
+the corresponding axis is dispatched as the first parameter of the event.
+
+In summary; the `value` dispatched for
+`ps-scroll-y`, `ps-scroll-up`, `ps-scroll-down`, `ps-y-reach-start`, and `ps-y-reach-end` events is the current scroll 
+position of the vertical scroll bar; where as it is the current scroll position of the horizontal scroll bar for 
+`ps-scroll-y`, `ps-scroll-up`, `ps-scroll-down`, `ps-y-reach-start`, and `ps-y-reach-end` events.  
 
 ### ps-scroll-y
 This event fires when the y-axis is scrolled in either direction.
