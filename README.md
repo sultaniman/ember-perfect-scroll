@@ -131,7 +131,8 @@ should be injected to a relevant construct such as controller (as in the snippet
 relevant code gets notified about initialization and destroy phases of  `perfect-scroll` and you should be able to call 
 `updatePerfectScroll` when needed.
 
-Another useful method provided by `PerfectScrollController` mixin is `performScroll`. This method takes three arguments:
+Another useful method provided by `PerfectScrollController` mixin is `performScroll`. As the name implies, scrolling to 
+desired scrollbar positions should be performed via this method. It takes three arguments:
 1. `scrollLeft`: new scroll position for horizontal scrollbar. Pass `undefined` if no update is desired for x-axis.
 2. `scrollTop`: new scroll position for vertical scrollbar. Pass `undefined` if no update is desired for y-axis.
 3. `scrolldId`: Optional parameter to identify the `perfect-scroll` to be scrolled. First `perfect-scrollbar` being 
