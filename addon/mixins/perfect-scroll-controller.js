@@ -49,7 +49,8 @@ export default Ember.Mixin.create({
 
   actions: {
     lifeCycleEventOccurred(perfectScrollId, eventName) {
-      eventName === 'initialized' ? this.get('perfectScrollIds').pushObject(perfectScrollId) :  this.get('perfectScrollIds').removeObject(perfectScrollId);
+      eventName === 'initialized' ? this.get('perfectScrollIds').pushObject(perfectScrollId) :
+        this.get('perfectScrollIds').removeObject(perfectScrollId);
     },
   }
 });
