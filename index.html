@@ -22,7 +22,12 @@
 <p>As an example you can use dummy app for tests under <code>tests/dummy</code></p>
 <p><code>bower install perfect-scrollbar</code></p>
 <h2>Scroll events</h2>
-<p>perfect-scrollbar dispatches its own custom events.</p>
+<p>perfect-scrollbar dispatches its own custom events. For each event type; the current value of the scroll position for 
+the corresponding axis is dispatched as the first parameter of the event.</p>
+<p>In summary; the <code>value</code> dispatched for
+<code>ps-scroll-y</code>, <code>ps-scroll-up</code>, <code>ps-scroll-down</code>, <code>ps-y-reach-start</code>, and <code>ps-y-reach-end</code> events is the current scroll 
+position of the vertical scroll bar; where as it is the current scroll position of the horizontal scroll bar for 
+<code>ps-scroll-y</code>, <code>ps-scroll-up</code>, <code>ps-scroll-down</code>, <code>ps-y-reach-start</code>, and <code>ps-y-reach-end</code> events.  </p>
 <h3>ps-scroll-y</h3>
 <p>This event fires when the y-axis is scrolled in either direction.</p>
 <h3>ps-scroll-x</h3>
@@ -46,7 +51,61 @@
 <p>To use them just pass the event name and bound your action</p>
 <pre><span class="xml"></span><span class="hljs-template-tag">{{#<span class="hljs-name">perfect-scroll</span> ps-y-reach-end=(action 'yReachEnd')}}</span><span class="xml">
     CONTENTS
-</span><span class="hljs-template-tag">{{/<span class="hljs-name">perfect-scroll</span>}}</span><span class="xml"></span></pre><h2>Optional parameters</h2>
+</span><span class="hljs-template-tag">{{/<span class="hljs-name">perfect-scroll</span>}}</span><span class="xml"></span></pre><h2>PerfectScrollBarController</h2>
+<p><a>perfect-scrollbar</a> requires to call <code>update</code> in case the size 
+of the container or the content changes. In order to enable calling <code>update</code> for underlying perfect scroll component you
+should make use of <code>PerfectScrollBarController</code> mixin. This mixin contains a method called <code>updatePerfectScroll</code> that 
+takes an optional <code>scrollId</code> parameter (which you can pass to the <code>perfect-scroll</code> within the template). If <code>scrolldId</code> 
+parameter is omitted; the first <code>perfect-scroll</code> being controlled is updated. Please take a look at the following code 
+snippet in order to update the scroll bar programmatically in case an update is needed due to content or container size 
+change.</p>
+<pre><span class="xml"></span><span class="hljs-template-tag">{{#<span class="hljs-name">perfect-scroll</span> lifeCycleEventOccurred=(action 'lifeCycleEventOccurred')}}</span><span class="xml">
+    CONTENTS
+</span><span class="hljs-template-tag">{{/<span class="hljs-name">perfect-scroll</span>}}</span><span class="xml"></span></pre><pre><span class="hljs-keyword">import</span> Ember <span class="hljs-keyword">from</span> <span class="hljs-string">'ember'</span>;
+<span class="hljs-keyword">import</span> PerfectScrollController <span class="hljs-keyword">from</span> <span class="hljs-string">'ember-perfect-scroll/mixins/perfect-scroll-controller'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Ember.Controller.extend(PerfectScrollController,{
+  <span class="hljs-attr">actions</span>: {
+    yReachEnd(scrollPosition) {
+      <span class="hljs-comment">/* eslint-disable no-console */</span>
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`ps-y-reach-end - <span class="hljs-subst">${scrollPosition}</span>`</span>);
+    },
+
+    scrollX(scrollPosition) {
+      <span class="hljs-comment">/* eslint-disable no-console */</span>
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`ps-scroll-x - <span class="hljs-subst">${scrollPosition}</span>`</span>);
+    },
+
+    scrollY(scrollPosition) {
+      <span class="hljs-comment">/* eslint-disable no-console */</span>
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`ps-scroll-y - <span class="hljs-subst">${scrollPosition}</span>`</span>);
+    },
+
+    changeContainerHeightTo500() {
+      Ember.$(<span class="hljs-string">'.ps-content'</span>).height(<span class="hljs-number">500</span>);
+      <span class="hljs-keyword">this</span>.updatePerfectScroll();
+    },
+
+    performScrollTo150_150() {
+      <span class="hljs-keyword">this</span>.performScroll(<span class="hljs-number">150</span>, <span class="hljs-number">150</span>);
+    },
+  }
+});</pre><p><code>PerfectScrollController</code> mixin needs to be imported from <code>ember-perfect-scroll/mixins/perfect-scroll-controller</code> and 
+should be injected to a relevant construct such as controller (as in the snippet above), a route or a component. 
+<code>perfect-scroll</code>'s <code>lifeCycleEventOccurred</code> event needs to be handled via 
+<code>lifeCycleEventOccurred=(action 'lifeCycleEventOccurred')</code> declaration within the template. By this way; the mixin's 
+relevant code gets notified about initialization and destroy phases of  <code>perfect-scroll</code> and you should be able to call 
+<code>updatePerfectScroll</code> when needed.</p>
+<p>Another useful method provided by <code>PerfectScrollController</code> mixin is <code>performScroll</code>. As the name implies, scrolling to 
+desired scrollbar positions should be performed via this method. It takes three arguments:</p>
+<ol>
+<li><code>scrollLeft</code>: new scroll position for horizontal scrollbar. Pass <code>undefined</code> if no update is desired for x-axis.</li>
+<li><code>scrollTop</code>: new scroll position for vertical scrollbar. Pass <code>undefined</code> if no update is desired for y-axis.</li>
+<li><code>scrolldId</code>: Optional parameter to identify the <code>perfect-scroll</code> to be scrolled. First <code>perfect-scrollbar</code> being 
+controlled is applied scrolling if this parameter is omitted.
+##</li>
+</ol>
+<h2>Optional parameters</h2>
 <h4>wheelSpeed</h4>
 <p>The scroll speed applied to mousewheel event.
 <strong>Default: 1</strong></p>
