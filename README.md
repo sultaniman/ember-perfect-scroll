@@ -31,7 +31,13 @@ As an example you can use dummy app for tests under `tests/dummy`
 `bower install perfect-scrollbar`
 
 ## Scroll events
-perfect-scrollbar dispatches its own custom events.
+perfect-scrollbar dispatches its own custom events. For each event type; the current value of the scroll position for 
+the corresponding axis is dispatched as the first parameter of the event.
+
+In summary; the `value` dispatched for
+`ps-scroll-y`, `ps-scroll-up`, `ps-scroll-down`, `ps-y-reach-start`, and `ps-y-reach-end` events is the current scroll 
+position of the vertical scroll bar; where as it is the current scroll position of the horizontal scroll bar for 
+`ps-scroll-y`, `ps-scroll-up`, `ps-scroll-down`, `ps-y-reach-start`, and `ps-y-reach-end` events.  
 
 ### ps-scroll-y
 This event fires when the y-axis is scrolled in either direction.
@@ -69,6 +75,69 @@ To use them just pass the event name and bound your action
     CONTENTS
 {{/perfect-scroll}}
 ```
+
+## PerfectScrollBarController
+[perfect-scrollbar](hhttps://github.com/utatti/perfect-scrollbar#how-to-use) requires to call `update` in case the size 
+of the container or the content changes. In order to enable calling `update` for underlying perfect scroll component you
+should make use of `PerfectScrollBarController` mixin. This mixin contains a method called `updatePerfectScroll` that 
+takes an optional `scrollId` parameter (which you can pass to the `perfect-scroll` within the template). If `scrolldId` 
+parameter is omitted; the first `perfect-scroll` being controlled is updated. Please take a look at the following code 
+snippet in order to update the scroll bar programmatically in case an update is needed due to content or container size 
+change.
+
+```hbs
+{{#perfect-scroll lifeCycleEventOccurred=(action 'lifeCycleEventOccurred')}}
+    CONTENTS
+{{/perfect-scroll}}
+```
+
+```javascript
+import Ember from 'ember';
+import PerfectScrollController from 'ember-perfect-scroll/mixins/perfect-scroll-controller';
+
+export default Ember.Controller.extend(PerfectScrollController,{
+  actions: {
+    yReachEnd(scrollPosition) {
+      /* eslint-disable no-console */
+      console.log(`ps-y-reach-end - ${scrollPosition}`);
+    },
+
+    scrollX(scrollPosition) {
+      /* eslint-disable no-console */
+      console.log(`ps-scroll-x - ${scrollPosition}`);
+    },
+
+    scrollY(scrollPosition) {
+      /* eslint-disable no-console */
+      console.log(`ps-scroll-y - ${scrollPosition}`);
+    },
+
+    changeContainerHeightTo500() {
+      Ember.$('.ps-content').height(500);
+      this.updatePerfectScroll();
+    },
+
+    performScrollTo150_150() {
+      this.performScroll(150, 150);
+    },
+  }
+});
+```
+
+`PerfectScrollController` mixin needs to be imported from `ember-perfect-scroll/mixins/perfect-scroll-controller` and 
+should be injected to a relevant construct such as controller (as in the snippet above), a route or a component. 
+`perfect-scroll`'s `lifeCycleEventOccurred` event needs to be handled via 
+`lifeCycleEventOccurred=(action 'lifeCycleEventOccurred')` declaration within the template. By this way; the mixin's 
+relevant code gets notified about initialization and destroy phases of  `perfect-scroll` and you should be able to call 
+`updatePerfectScroll` when needed.
+
+Another useful method provided by `PerfectScrollController` mixin is `performScroll`. As the name implies, scrolling to 
+desired scrollbar positions should be performed via this method. It takes three arguments:
+1. `scrollLeft`: new scroll position for horizontal scrollbar. Pass `undefined` if no update is desired for x-axis.
+2. `scrollTop`: new scroll position for vertical scrollbar. Pass `undefined` if no update is desired for y-axis.
+3. `scrolldId`: Optional parameter to identify the `perfect-scroll` to be scrolled. First `perfect-scrollbar` being 
+controlled is applied scrolling if this parameter is omitted.
+##
 
 ## Optional parameters
 
