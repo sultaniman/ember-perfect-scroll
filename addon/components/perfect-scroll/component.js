@@ -69,7 +69,13 @@ export default Ember.Component.extend({
     this._super(...arguments);
 
     run.schedule('afterRender', () => {
-      window.Ps.initialize(this.getElementForPs(), this._getOptions());
+      let element = this.getElementForPs();
+      window.Ps.initialize(element, this._getOptions());
+
+      // reflect initial scrollLeft and scrollTop positions to the element
+      element.scrollLeft = this.get('scrollLeft');
+      element.scrollTop = this.get('scrollTop');
+
       this.bindEvents();
       this.triggerLifeCycleAction('initialized');
     });

@@ -163,6 +163,29 @@ test("it updates perfect scroll via perfect-scroll-controller mixin", function (
   assert.equal(psYReachEndEventCount, 1, 'The event handling should have been triggered after perfect scroll update is triggered.');
 });
 
+test('initial scrollLeft and scrollTop positions are respected', function (assert) {
+  this.render(hbs`
+    <style>
+      .ps-content { position:relative; margin:0px auto; padding:0px; width: 100px; height: 100px; overflow: auto}
+      .ps-content .content {width: 400px; height: 400px}
+    </style>
+    {{#perfect-scroll scrollId='first'}}
+      <div class="content"></div>
+    {{/perfect-scroll}}
+    {{#perfect-scroll scrollId='second' scrollTop=20 scrollLeft=200}}
+      <div class="content"></div>
+    {{/perfect-scroll}}`);
+
+  let firstElement = this.$('#first');
+  let secondElement = this.$('#second');
+
+  assert.equal(firstElement.scrollLeft(), 0, "First element's initial scroll left should have been 0 since value is not passed from outside");
+  assert.equal(firstElement.scrollTop(), 0, "First element's initial scroll top should have been 0 since value is not passed from outside");
+
+  assert.equal(secondElement.scrollLeft(), 200, "Second element's initial scroll left should have been 20 since value is passed from outside");
+  assert.equal(secondElement.scrollTop(), 20, "Second element's initial scroll top should have been 20 since value is passed from outside");
+})
+
 /**
  * Corresponding events will be triggered multiple times by the event firing test; hence we need a way to store number of
  * times each individual event is fired.
