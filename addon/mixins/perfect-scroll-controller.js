@@ -1,5 +1,6 @@
 import Ember from 'ember';
-const {isEmpty, isPresent} = Ember;
+
+const {get, isEmpty, isPresent} = Ember;
 
 export default Ember.Mixin.create({
   init() {
@@ -49,8 +50,11 @@ export default Ember.Mixin.create({
 
   actions: {
     lifeCycleEventOccurred(perfectScrollId, eventName) {
-      eventName === 'initialized' ? this.get('perfectScrollIds').pushObject(perfectScrollId) :
-        this.get('perfectScrollIds').removeObject(perfectScrollId);
-    },
+      if (eventName === 'initialized') {
+        get(this, 'perfectScrollIds').pushObject(perfectScrollId);
+      } else {
+        get(this, 'perfectScrollIds').removeObject(perfectScrollId);
+      }
+    }
   }
 });
