@@ -1,7 +1,6 @@
 import Ember from 'ember';
 import layout from './template';
 
-
 const {
   $,
   get,
@@ -48,6 +47,9 @@ export default Ember.Component.extend({
   // Internal id for element
   scrollId: null,
 
+  // Internal perfect-scrollbar
+  _perfectScrollbar: null,
+
   // Perfect scrollbar related settings
   wheelSpeed: 1,
   wheelPropagation: false,
@@ -70,7 +72,8 @@ export default Ember.Component.extend({
 
     run.schedule('afterRender', () => {
       let element = this.getElementForPs();
-      window.Ps.initialize(element, this._getOptions());
+
+      this.set('_perfectScrollbar', new window.PerfectScrollbar(element, this._getOptions()));
 
       // reflect initial scrollLeft and scrollTop positions to the element
       element.scrollLeft = this.get('scrollLeft');
@@ -84,10 +87,11 @@ export default Ember.Component.extend({
   willDestroyElement() {
     this._super(...arguments);
 
-    let element = this.getElementForPs();
+    let perfectScrollbar = this.get('_perfectScrollbar');
 
-    if (element) {
-      window.Ps.destroy(element);
+    if (perfectScrollbar) {
+      perfectScrollbar.destroy();
+      this.set('_perfectScrollbar', null);
     }
 
     this.unbindEvents();
@@ -96,7 +100,7 @@ export default Ember.Component.extend({
 
   triggerLifeCycleAction(eventName) {
     let lifeCycleEventOccurred = this.get('lifeCycleEventOccurred') || function(){};
-    lifeCycleEventOccurred(this.get('eId'), eventName);
+    lifeCycleEventOccurred(this.get('_perfectScrollbar'), eventName);
   },
 
   getElementForPs() {
@@ -170,8 +174,6 @@ export default Ember.Component.extend({
       scrollXMarginOffset   : get(this, 'scrollXMarginOffset'),
       scrollYMarginOffset   : get(this, 'scrollYMarginOffset'),
       includePadding        : get(this, 'includePadding'),
-      scrollTop             : get(this, 'scrollTop'),
-      scrollLeft            : get(this, 'scrollLeft'),
       theme                 : get(this, 'theme'),
     };
   }

@@ -9,51 +9,51 @@ export default Ember.Mixin.create({
   },
 
   initializePerfecScrollArray() {
-    this.set('perfectScrollIds', Ember.A());
+    this.set('perfectScrolls', Ember.A());
   },
 
-  getPerfectScrollElement(perfectScrollId) {
-    if (isEmpty(this.get('perfectScrollIds'))) {
+  getPerfectScroll(perfectScrollId) {
+    if (isEmpty(this.get('perfectScrolls'))) {
       return null;
     }
 
     if (isEmpty(perfectScrollId)) {
-      perfectScrollId = this.get('perfectScrollIds')[0];
+      return this.get('perfectScrolls')[0];
     }
 
-    return document.getElementById(perfectScrollId);
+    return this.get('perfectScrolls').filter(item=>get(item, 'element.id')===perfectScrollId)[0];
   },
 
   updatePerfectScroll(perfectScrollId) {
-    let perfectScrollElement = this.getPerfectScrollElement(perfectScrollId);
+    let perfectScroll = this.getPerfectScroll(perfectScrollId);
 
-    if (isPresent(perfectScrollElement)) {
-      window.Ps.update(perfectScrollElement);
+    if (isPresent(perfectScroll)) {
+      perfectScroll.update();
     }
   },
 
   performScroll(scrollLeft, scrollTop, perfectScrollId) {
-    let perfectScrollElement = this.getPerfectScrollElement(perfectScrollId);
+    let perfectScroll = this.getPerfectScroll(perfectScrollId);
 
-    if (isEmpty(perfectScrollElement)) {
+    if (isEmpty(perfectScroll)) {
       return;
     }
 
     if (isPresent(scrollLeft)) {
-      perfectScrollElement.scrollLeft = scrollLeft;
+      perfectScroll.element.scrollLeft = scrollLeft;
     }
 
     if (isPresent(scrollTop)) {
-      perfectScrollElement.scrollTop = scrollTop;
+      perfectScroll.element.scrollTop = scrollTop;
     }
   },
 
   actions: {
-    lifeCycleEventOccurred(perfectScrollId, eventName) {
+    lifeCycleEventOccurred(perfectScroll, eventName) {
       if (eventName === 'initialized') {
-        get(this, 'perfectScrollIds').pushObject(perfectScrollId);
+        get(this, 'perfectScrolls').pushObject(perfectScroll);
       } else {
-        get(this, 'perfectScrollIds').removeObject(perfectScrollId);
+        get(this, 'perfectScrolls').removeObject(perfectScroll);
       }
     }
   }
