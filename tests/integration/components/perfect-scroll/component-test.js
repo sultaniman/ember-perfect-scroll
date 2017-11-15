@@ -2,6 +2,8 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PerfectScrollControllerMixin from 'ember-perfect-scroll/mixins/perfect-scroll-controller';
 import Ember from 'ember';
+import wait from 'ember-test-helpers/wait';
+
 
 const {set} = Ember;
 
@@ -41,16 +43,29 @@ test('it fires relevant ps events upon scrolling', function (assert) {
     {{/perfect-scroll}}`);
 
   let scrollElement = this.$('.ps-content');
+  assert.expect(6);
 
-  // Need to force Ps update initially; which will result in 2 events; ps-x-reach-start & ps-y-reach-start
-  window.Ps.update(scrollElement[0]);
+  return wait().then(()=>{
+    scrollVertical(scrollElement, 50);
+    return wait().then(()=>{
+      scrollHorizontal(scrollElement, 50);
+      return wait().then(()=>{
+        scrollVertical(scrollElement, 100);
+        return wait().then(()=>{
+          scrollVertical(scrollElement, 300);
+          return wait().then(()=>{
+            scrollVertical(scrollElement, 150);
+            return wait().then(()=>{
+              scrollVertical(scrollElement, 0);
+              return wait();
+            });
+          });
+        });
+      });
+    });
+  });
 
-  /**
-   * Initial vertical scroll will also result in ps-x-reach-start in addition to y-axis events due to manual triggering
-   * of Ps update
-   */
-  scrollVertical(scrollElement, 50);
-  scrollHorizontal(scrollElement, 50);
+  /*scrollHorizontal(scrollElement, 50);
 
   scrollVertical(scrollElement, 100);
   scrollVertical(scrollElement, 300);
@@ -64,10 +79,9 @@ test('it fires relevant ps events upon scrolling', function (assert) {
   scrollHorizontal(scrollElement, 150);
   scrollHorizontal(scrollElement, 0);
   scrollHorizontal(scrollElement, 1000);
-  scrollHorizontal(scrollElement, 299);
+  scrollHorizontal(scrollElement, 299);*/
 
   // We expect 37 events to be fired in total
-  assert.expect(37);
 });
 
 test("it scrolls programmatically via perfect-scroll-controller mixin", function (assert) {
@@ -154,7 +168,6 @@ test("it updates perfect scroll via perfect-scroll-controller mixin", function (
     {{/perfect-scroll}}`);
 
   let scrollElement = this.$('.ps-content');
-  window.Ps.update(scrollElement[0]);
 
   scrollElement.scrollTop(300);
   assert.equal(psYReachEndEventCount, 0, 'The event handling should not have been triggered since perfect scroll update is not yet fired.');
@@ -239,7 +252,6 @@ function performAssertionForEvent(assert, actualScrollPosition, expectedScrollPo
  */
 function scrollVertical(scrollElement, scrollPosition) {
   scrollElement.scrollTop(scrollPosition);
-  window.Ps.update(scrollElement[0]);
 }
 
 /**
@@ -250,5 +262,5 @@ function scrollVertical(scrollElement, scrollPosition) {
  */
 function scrollHorizontal(scrollElement, scrollPosition) {
   scrollElement.scrollLeft(scrollPosition);
-  window.Ps.update(scrollElement[0]);
 }
+

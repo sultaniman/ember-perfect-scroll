@@ -28,6 +28,7 @@ export default Ember.Mixin.create({
     let perfectScroll = this.getPerfectScroll(perfectScrollId);
 
     if (isPresent(perfectScroll)) {
+
       perfectScroll.update();
     }
   },
