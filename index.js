@@ -14,8 +14,8 @@ module.exports = {
     this._super.included(app);
 
     if (!process.env.EMBER_CLI_FASTBOOT) {
-      app.import('node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.js');
-      app.import('node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.css');
+      app.import('node_modules/perfect-scrollbar/dist/perfect-scrollbar.js');
+      app.import('node_modules/perfect-scrollbar/css/perfect-scrollbar.css');
     }
   }
 };
