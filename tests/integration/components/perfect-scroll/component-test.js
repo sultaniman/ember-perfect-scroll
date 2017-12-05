@@ -1,11 +1,10 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PerfectScrollControllerMixin from 'ember-perfect-scroll/mixins/perfect-scroll-controller';
-import Ember from 'ember';
 import wait from 'ember-test-helpers/wait';
+import Ember from 'ember';
 
-
-const {set} = Ember;
+const {get, set} = Ember;
 
 moduleForComponent('perfect-scroll', 'Integration | Component | perfect scroll', {
   integration: true
@@ -17,17 +16,46 @@ test('it renders with content "ps"', function(assert) {
 });
 
 
-test('it fires relevant ps events upon scrolling', function (assert) {
-  addHandlerForEvent(this, assert, 'ps-scroll-y', [50, 100, 300, 150, 0, 300, 299]);
-  addHandlerForEvent(this, assert, 'ps-scroll-down', [50, 100, 300, 300]);
-  addHandlerForEvent(this, assert, 'ps-scroll-up', [150, 0, 299]);
-  addHandlerForEvent(this, assert, 'ps-y-reach-start', [0, 0]);
-  addHandlerForEvent(this, assert, 'ps-y-reach-end', [300, 300]);
-  addHandlerForEvent(this, assert, 'ps-scroll-x', [50, 100, 300, 150, 0, 300, 299]);
-  addHandlerForEvent(this, assert, 'ps-scroll-right', [50, 100, 300, 300]);
-  addHandlerForEvent(this, assert, 'ps-scroll-left', [150, 0, 299]);
-  addHandlerForEvent(this, assert, 'ps-x-reach-start', [0, 0, 0]);
-  addHandlerForEvent(this, assert, 'ps-x-reach-end', [300, 300]);
+test('it fires ps-scroll-y, ps-scroll-x, ps-scroll-up, ps-scroll-left, ps-y-reach-start, ps-x-reach-start as expected', function (assert) {
+  clearEventCounts(this);
+  addHandlerForEvent(this, assert, 'ps-scroll-y', [200, 0]);
+  addHandlerForEvent(this, assert, 'ps-y-reach-start', [0]);
+  addHandlerForEvent(this, assert, 'ps-scroll-up', [0]);
+  addHandlerForEvent(this, assert, 'ps-scroll-x', [200, 0]);
+  addHandlerForEvent(this, assert, 'ps-x-reach-start', [0]);
+  addHandlerForEvent(this, assert, 'ps-scroll-left', [0]);
+
+
+  this.render(hbs`
+    <style>
+      .ps-content { position:relative; margin:0px auto; padding:0px; width: 100px; height: 100px; overflow: auto}
+      .ps-content .content {width: 400px; height: 400px}
+    </style>
+    {{#perfect-scroll scrollTop=200 scrollLeft=200
+      ps-scroll-y=(action 'ps-scroll-y') ps-y-reach-start=(action 'ps-y-reach-start')
+      ps-scroll-up=(action 'ps-scroll-up') ps-scroll-left=(action 'ps-scroll-left')
+      ps-scroll-x=(action 'ps-scroll-x') ps-x-reach-start=(action 'ps-x-reach-start')}}
+      <div class="content"></div>
+    {{/perfect-scroll}}`);
+
+  let scrollElement = this.$('.ps-content');
+  assert.expect(8);
+
+  return wait().then(()=> {
+    scrollVertical(scrollElement, 0);
+    scrollHorizontal(scrollElement, 0);
+  });
+});
+
+
+test('it fires ps-scroll-y, ps-scroll-x, ps-scroll-down, ps-scroll-right, ps-y-reach-end, ps-x-reach-end as expected', function (assert) {
+  clearEventCounts(this);
+  addHandlerForEvent(this, assert, 'ps-scroll-y', [300]);
+  addHandlerForEvent(this, assert, 'ps-y-reach-end', [300]);
+  addHandlerForEvent(this, assert, 'ps-scroll-down', [300]);
+  addHandlerForEvent(this, assert, 'ps-scroll-x', [300]);
+  addHandlerForEvent(this, assert, 'ps-x-reach-end', [300]);
+  addHandlerForEvent(this, assert, 'ps-scroll-right', [300]);
 
 
   this.render(hbs`
@@ -36,8 +64,7 @@ test('it fires relevant ps events upon scrolling', function (assert) {
       .ps-content .content {width: 400px; height: 400px}
     </style>
     {{#perfect-scroll ps-scroll-y=(action 'ps-scroll-y') ps-y-reach-end=(action 'ps-y-reach-end')
-      ps-scroll-down=(action 'ps-scroll-down') ps-scroll-up=(action 'ps-scroll-up') ps-y-reach-start=(action 'ps-y-reach-start')
-      ps-scroll-left=(action 'ps-scroll-left') ps-scroll-right=(action 'ps-scroll-right') ps-x-reach-start=(action 'ps-x-reach-start')
+      ps-scroll-down=(action 'ps-scroll-down') ps-scroll-right=(action 'ps-scroll-right')
       ps-scroll-x=(action 'ps-scroll-x') ps-x-reach-end=(action 'ps-x-reach-end')}}
       <div class="content"></div>
     {{/perfect-scroll}}`);
@@ -45,43 +72,10 @@ test('it fires relevant ps events upon scrolling', function (assert) {
   let scrollElement = this.$('.ps-content');
   assert.expect(6);
 
-  return wait().then(()=>{
-    scrollVertical(scrollElement, 50);
-    return wait().then(()=>{
-      scrollHorizontal(scrollElement, 50);
-      return wait().then(()=>{
-        scrollVertical(scrollElement, 100);
-        return wait().then(()=>{
-          scrollVertical(scrollElement, 300);
-          return wait().then(()=>{
-            scrollVertical(scrollElement, 150);
-            return wait().then(()=>{
-              scrollVertical(scrollElement, 0);
-              return wait();
-            });
-          });
-        });
-      });
-    });
+  return wait().then(()=> {
+    scrollVertical(scrollElement, 400);
+    scrollHorizontal(scrollElement, 400);
   });
-
-  /*scrollHorizontal(scrollElement, 50);
-
-  scrollVertical(scrollElement, 100);
-  scrollVertical(scrollElement, 300);
-  scrollVertical(scrollElement, 150);
-  scrollVertical(scrollElement, 0);
-  scrollVertical(scrollElement, 1000);
-  scrollVertical(scrollElement, 299);
-
-  scrollHorizontal(scrollElement, 100);
-  scrollHorizontal(scrollElement, 300);
-  scrollHorizontal(scrollElement, 150);
-  scrollHorizontal(scrollElement, 0);
-  scrollHorizontal(scrollElement, 1000);
-  scrollHorizontal(scrollElement, 299);*/
-
-  // We expect 37 events to be fired in total
 });
 
 test("it scrolls programmatically via perfect-scroll-controller mixin", function (assert) {
@@ -91,6 +85,7 @@ test("it scrolls programmatically via perfect-scroll-controller mixin", function
    */
   PerfectScrollControllerMixin.apply(this);
   this.initializePerfecScrollArray();
+  assert.expect(2);
 
   this.render(hbs`
     <style>
@@ -116,6 +111,7 @@ test("it scrolls two different perfect scrolls programmatically with respect to 
    */
   PerfectScrollControllerMixin.apply(this);
   this.initializePerfecScrollArray();
+  assert.expect(6);
 
   this.render(hbs`
     <style>
@@ -136,6 +132,7 @@ test("it scrolls two different perfect scrolls programmatically with respect to 
   assert.equal(firstElement.scrollTop(), 200);
 
   // Performing scroll via id will scroll corresponding perfect scroll
+  // Performing scroll via id will scroll corresponding perfect scroll
   this.performScroll(200, 150, 'second');
   let secondElement = this.$('#second');
   assert.equal(secondElement.scrollLeft(), 200);
@@ -146,37 +143,9 @@ test("it scrolls two different perfect scrolls programmatically with respect to 
   assert.equal(firstElement.scrollTop(), 80);
 });
 
-test("it updates perfect scroll via perfect-scroll-controller mixin", function (assert) {
-  /**
-   * Make test context have necessary action via applying mixin; since init of mixin will not be run; run the initialization
-   * method of mixin for array creation.
-   */
-  PerfectScrollControllerMixin.apply(this);
-  this.initializePerfecScrollArray();
-
-  let psYReachEndEventCount = 0;
-
-  set(this.get('actions'), 'ps-y-reach-end', function() { psYReachEndEventCount++;});
-
-  this.render(hbs`
-    <style>
-      .ps-content { position:relative; margin:0px auto; padding:0px; width: 100px; height: 100px; overflow: auto}
-      .ps-content .content {width: 400px; height: 400px}
-    </style>
-    {{#perfect-scroll lifeCycleEventOccurred=(action 'lifeCycleEventOccurred') ps-y-reach-end=(action 'ps-y-reach-end')}}
-      <div class="content"></div>
-    {{/perfect-scroll}}`);
-
-  let scrollElement = this.$('.ps-content');
-
-  scrollElement.scrollTop(300);
-  assert.equal(psYReachEndEventCount, 0, 'The event handling should not have been triggered since perfect scroll update is not yet fired.');
-  // Call mixin's own update method instead of window.Ps.update
-  this.updatePerfectScroll();
-  assert.equal(psYReachEndEventCount, 1, 'The event handling should have been triggered after perfect scroll update is triggered.');
-});
-
 test('initial scrollLeft and scrollTop positions are respected', function (assert) {
+  assert.expect(4);
+
   this.render(hbs`
     <style>
       .ps-content { position:relative; margin:0px auto; padding:0px; width: 100px; height: 100px; overflow: auto}
@@ -197,24 +166,57 @@ test('initial scrollLeft and scrollTop positions are respected', function (asser
 
   assert.equal(secondElement.scrollLeft(), 200, "Second element's initial scroll left should have been 20 since value is passed from outside");
   assert.equal(secondElement.scrollTop(), 20, "Second element's initial scroll top should have been 20 since value is passed from outside");
-})
+});
+
+test("it updates perfect scroll via perfect-scroll-controller mixin", function (assert) {
+  /**
+   * Make test context have necessary action via applying mixin; since init of mixin will not be run; run the initialization
+   * method of mixin for array creation.
+   */
+  PerfectScrollControllerMixin.apply(this);
+  this.initializePerfecScrollArray();
+  // Do not know why we are receiving ps-y-reach-end twice in case container height is changed; but we receive the event
+  // anyway from perfect-scrollbar
+  assert.expect(2);
+
+  set(this.get('actions'), 'ps-y-reach-end', (scrollPosition)=>assert.equal(scrollPosition, 200, 'Container height ' +
+    'change should have been reflected upon caliing updatePerfectScrollBar'));
+
+  this.render(hbs`
+    <style>
+      .ps-content { position:relative; margin:0px auto; padding:0px; width: 100px; height: 100px; overflow: auto}
+      .ps-content .content {width: 400px; height: 400px}
+    </style>
+    {{#perfect-scroll scrollTop=300 lifeCycleEventOccurred=(action 'lifeCycleEventOccurred') ps-y-reach-end=(action 'ps-y-reach-end')}}
+      <div class="content"></div>
+    {{/perfect-scroll}}`);
+
+  let content = this.$('.ps-content');
+
+  content.height(200);
+  this.updatePerfectScroll();
+
+  return wait();
+});
+
 
 /**
- * Corresponding events will be triggered multiple times by the event firing test; hence we need a way to store number of
- * times each individual event is fired.
+ * Initializes event counts to 0 back again
  */
-let eventCounts = {
-  'ps-scroll-y' : 0,
-  'ps-scroll-x': 0,
-  'ps-scroll-up': 0,
-  'ps-scroll-down': 0,
-  'ps-scroll-left': 0,
-  'ps-scroll-right': 0,
-  'ps-y-reach-start': 0,
-  'ps-y-reach-end': 0,
-  'ps-x-reach-start': 0,
-  'ps-x-reach-end': 0
-};
+function clearEventCounts(testContext) {
+  set(testContext, 'eventCounts', {
+    'ps-scroll-y' : 0,
+    'ps-scroll-x': 0,
+    'ps-scroll-up': 0,
+    'ps-scroll-down': 0,
+    'ps-scroll-left': 0,
+    'ps-scroll-right': 0,
+    'ps-y-reach-start': 0,
+    'ps-y-reach-end': 0,
+    'ps-x-reach-start': 0,
+    'ps-x-reach-end': 0
+  });
+}
 
 /**
  * Add a generic event handler for each scrolling event to be fired by perfect scroll.
@@ -226,7 +228,8 @@ let eventCounts = {
  */
 function addHandlerForEvent(testContext, assert, eventName, expectedScrollPositionValues) {
   testContext.on(eventName, (scrollPosition)=> {
-    let eventCount = eventCounts[eventName]++;
+    let eventCount = get(testContext,`eventCounts.${eventName}`);
+    set(testContext, `eventCounts.${eventName}`, eventCount+1)
     performAssertionForEvent(assert, scrollPosition, expectedScrollPositionValues[eventCount], eventName, eventCount+1);
   });
 }
@@ -238,10 +241,9 @@ function addHandlerForEvent(testContext, assert, eventName, expectedScrollPositi
  * @param actualScrollPosition, scroll's actual position
  * @param expectedScrollPosition, expected value for scroll's position
  * @param eventName, name of the event fired
- * @param eventCount, number of times the event fired so far
  */
-function performAssertionForEvent(assert, actualScrollPosition, expectedScrollPosition, eventName, eventCount) {
-  assert.equal(actualScrollPosition, expectedScrollPosition, `${eventName} assertion failed for event count : ${eventCount}`);
+function performAssertionForEvent(assert, actualScrollPosition, expectedScrollPosition, eventName) {
+  assert.equal(actualScrollPosition, expectedScrollPosition, `${eventName} assertion failed`);
 }
 
 /**

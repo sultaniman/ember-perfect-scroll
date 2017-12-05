@@ -144,7 +144,7 @@ export default Ember.Component.extend({
    */
   callEvent(evt, value) {
     if (isPresent(get(this, evt))) {
-      this.sendAction(evt, value);
+      run.next(this, ()=>this.sendAction(evt, value));
     }
   },
 
