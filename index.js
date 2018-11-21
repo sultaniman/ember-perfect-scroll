@@ -3,7 +3,7 @@
 const path = require('path');
 
 module.exports = {
-  name: require('./package').name,
+  name: "ember-perfect-scroll",
 
   isDevelopingAddon : function(){
     return true;

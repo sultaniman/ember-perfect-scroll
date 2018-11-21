@@ -1,6 +1,6 @@
 {
-  "name": "ember-perfect-scroll",
-  "version": "0.2.0",
+  "name": "ember-perfect-scroll-action-fixed",
+  "version": "0.2.1",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
