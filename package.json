@@ -1,13 +1,13 @@
 {
-  "name": "ember-perfect-scroll-action-fixed",
-  "version": "0.2.1",
+  "name": "ember-perfectscroll",
+  "version": "0.2.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "https://github.com/ahmetemrekilinc/ember-perfect-scroll.git",
+  "repository": "https://github.com/imanhodjaev/ember-perfect-scroll.git",
   "license": "MIT",
-  "author": "ahmetemrekilinc",
+  "author": "imanhodjaev",
   "directories": {
     "doc": "doc",
     "test": "tests"

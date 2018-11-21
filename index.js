@@ -5,13 +5,6 @@ const path = require('path');
 module.exports = {
   name: "ember-perfect-scroll",
 
-  isDevelopingAddon : function(){
-    return true;
-  },
-  hintingEnabled: function() {
-    return false;
-  },
-
   blueprintsPath: function() {
     return path.join(__dirname, 'blueprints');
   },
