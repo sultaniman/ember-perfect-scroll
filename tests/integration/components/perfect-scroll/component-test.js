@@ -1,10 +1,8 @@
+import { set, get } from '@ember/object';
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 import PerfectScrollControllerMixin from 'ember-perfect-scroll/mixins/perfect-scroll-controller';
 import wait from 'ember-test-helpers/wait';
-import Ember from 'ember';
-
-const {get, set} = Ember;
 
 moduleForComponent('perfect-scroll', 'Integration | Component | perfect scroll', {
   integration: true

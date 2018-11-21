@@ -1,16 +1,10 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
+import { computed, set, get } from '@ember/object';
+import { isEmpty, isPresent } from '@ember/utils';
+import { guidFor } from '@ember/object/internals';
 import layout from './template';
-
-const {
-  $,
-  get,
-  set,
-  run,
-  isPresent,
-  computed,
-  isEmpty,
-  guidFor
-} = Ember;
 
 // Perfect Scrollbar scroll events
 const psEvents = [
@@ -40,7 +34,7 @@ const psEventsScrollValueTypeMapping = {
   'ps-x-reach-end': 'scrollLeft',
 };
 
-export default Ember.Component.extend({
+export default Component.extend({
 
   layout: layout,
 
@@ -110,9 +104,8 @@ export default Ember.Component.extend({
   eId: computed('scrollId', {
     get() {
       if (isEmpty(get(this, 'scrollId'))) {
-        set(this, 'scrollId', `perfect-scroll-${guidFor(this)}`);
+        return `perfect-scroll-${guidFor(this)}`;
       }
-
       return get(this, 'scrollId');
     }
   }).readOnly(),
