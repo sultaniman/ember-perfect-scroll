@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Controller from '@ember/controller';
-import PerfectScrollController from 'ember-perfect-scroll/mixins/perfect-scroll-controller';
+import PerfectScrollController from 'ember-perfect-scroll-action-fixed/mixins/perfect-scroll-controller';
 
 export default Controller.extend(PerfectScrollController,{
   actions: {

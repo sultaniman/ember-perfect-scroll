@@ -1,5 +1,5 @@
 import EmberObject from '@ember/object';
-import PerfectScrollControllerMixin from 'ember-perfect-scroll/mixins/perfect-scroll-controller';
+import PerfectScrollControllerMixin from 'ember-perfect-scroll-action-fixed/mixins/perfect-scroll-controller';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | perfect scroll controller');

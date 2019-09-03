@@ -1,1 +1,1 @@
-export { default } from 'ember-perfect-scroll/components/perfect-scroll/component';
+export { default } from 'ember-perfect-scroll-action-fixed/components/perfect-scroll/component';

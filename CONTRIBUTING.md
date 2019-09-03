@@ -3,7 +3,7 @@
 ## Installation
 
 * `git clone <repository-url>`
-* `cd ember-perfect-scroll`
+* `cd ember-perfect-scroll-action-fixed`
 * `yarn install`
 
 ## Linting

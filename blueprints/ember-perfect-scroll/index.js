@@ -7,7 +7,7 @@ module.exports = {
     // not specified (since that doesn't actually matter to us
   },
 
-  afterInstall: function(options) {
+  afterInstall: function() {
     return this.addPackageToProject('perfect-scrollbar');
   }
 };
