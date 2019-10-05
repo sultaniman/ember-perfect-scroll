@@ -2,7 +2,6 @@ import Ember from 'ember';
 import layout from './template';
 
 const {
-  $,
   get,
   set,
   run,
