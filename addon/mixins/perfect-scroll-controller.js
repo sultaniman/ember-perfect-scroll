@@ -1,15 +1,16 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import Mixin from '@ember/object/mixin';
+import { get } from '@ember/object';
+import { isPresent, isEmpty } from '@ember/utils';
 
-const {get, isEmpty, isPresent} = Ember;
-
-export default Ember.Mixin.create({
+export default Mixin.create({
   init() {
     this._super(...arguments);
     this.initializePerfecScrollArray();
   },
 
   initializePerfecScrollArray() {
-    this.set('perfectScrolls', Ember.A());
+    this.set('perfectScrolls', A());
   },
 
   getPerfectScroll(perfectScrollId) {

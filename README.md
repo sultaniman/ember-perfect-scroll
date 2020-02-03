@@ -1,13 +1,13 @@
-# Ember-perfectscroll
+# Ember-perfect-scroll-action-fixed
 
-![Build Status: Linux](https://travis-ci.org/imanhodjaev/ember-perfect-scroll.svg?branch=master)
+![Build Status: Linux](https://travis-ci.org/ahmetemrekilinc/ember-perfect-scroll.svg?branch=master)
 
 ## Intro
 This is just a wrapper as an Ember component around [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
 
 ## Installation
-* `ember install ember-perfectscroll`
-* `ember g ember-perfect-scroll`
+* `ember install ember-perfect-scroll-action-fixed`
+* `ember g ember-perfect-scroll-action-fixed`
 
 ## Using
 You can pass its options as they are defined for `perfect-scrollbar` plugin
@@ -93,7 +93,7 @@ change.
 
 ```javascript
 import Ember from 'ember';
-import PerfectScrollController from 'ember-perfect-scroll/mixins/perfect-scroll-controller';
+import PerfectScrollController from 'ember-perfect-scroll-action-fixed/mixins/perfect-scroll-controller';
 
 export default Ember.Controller.extend(PerfectScrollController,{
   actions: {
@@ -124,7 +124,7 @@ export default Ember.Controller.extend(PerfectScrollController,{
 });
 ```
 
-`PerfectScrollController` mixin needs to be imported from `ember-perfect-scroll/mixins/perfect-scroll-controller` and 
+`PerfectScrollController` mixin needs to be imported from `ember-perfect-scroll-action-fixed/mixins/perfect-scroll-controller` and 
 should be injected to a relevant construct such as controller (as in the snippet above), a route or a component. 
 `perfect-scroll`'s `lifeCycleEventOccurred` event needs to be handled via 
 `lifeCycleEventOccurred=(action 'lifeCycleEventOccurred')` declaration within the template. By this way; the mixin's 

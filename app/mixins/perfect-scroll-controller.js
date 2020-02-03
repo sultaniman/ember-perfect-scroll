@@ -1,1 +1,1 @@
-export { default } from 'ember-perfect-scroll/mixins/perfect-scroll-controller';
+export { default } from 'ember-perfect-scroll-action-fixed/mixins/perfect-scroll-controller';

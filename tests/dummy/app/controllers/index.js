@@ -1,7 +1,8 @@
-import Ember from 'ember';
-import PerfectScrollController from 'ember-perfect-scroll/mixins/perfect-scroll-controller';
+import $ from 'jquery';
+import Controller from '@ember/controller';
+import PerfectScrollController from 'ember-perfect-scroll-action-fixed/mixins/perfect-scroll-controller';
 
-export default Ember.Controller.extend(PerfectScrollController,{
+export default Controller.extend(PerfectScrollController,{
   actions: {
     yReachEnd(scrollPosition) {
       /* eslint-disable no-console */
@@ -19,7 +20,7 @@ export default Ember.Controller.extend(PerfectScrollController,{
     },
 
     changeContainerHeightTo500() {
-      Ember.$('.ps-content').height(500);
+      $('.ps-content').height(500);
       this.updatePerfectScroll();
     },
 
