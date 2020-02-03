@@ -1,4 +1,4 @@
-# Ember-perfectscroll
+# Ember-perfect-scroll-action-fixed
 
 ![Build Status: Linux](https://travis-ci.org/ahmetemrekilinc/ember-perfect-scroll.svg?branch=master)
 
@@ -6,8 +6,8 @@
 This is just a wrapper as an Ember component around [perfect-scrollbar](https://github.com/noraesae/perfect-scrollbar).
 
 ## Installation
-* `ember install ember-perfectscroll`
-* `ember g ember-perfect-scroll`
+* `ember install ember-perfect-scroll-action-fixed`
+* `ember g ember-perfect-scroll-action-fixed`
 
 ## Using
 You can pass its options as they are defined for `perfect-scrollbar` plugin

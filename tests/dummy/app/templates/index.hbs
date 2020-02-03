@@ -1,10 +1,10 @@
 {{#perfect-scroll scrollId='myPerfectScroll' lifeCycleEventOccurred=(action 'lifeCycleEventOccurred') scrollTop=150
-                  scrollLeft=100 ps-y-reach-end=(action 'yReachEnd') ps-scroll-x='scrollX' ps-scroll-y='scrollY'}}
+                  scrollLeft=100 ps-y-reach-end=(action 'yReachEnd') ps-scroll-x=(action 'scrollX') ps-scroll-y=(action 'scrollY')}}
   <div class="content">
   </div>
 {{/perfect-scroll}}
 <br>
 <br>
-<button onclick={{action 'changeContainerHeightTo500'}}>Change Container Height</button>
+<button type="button" onclick={{action 'changeContainerHeightTo500'}}>Change Container Height</button>
  -
-<button onclick={{action 'performScrollTo150_150'}}>Perform Scroll</button>
+<button type="button" onclick={{action 'performScrollTo150_150'}}>Perform Scroll</button>
